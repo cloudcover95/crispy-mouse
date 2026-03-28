@@ -43,7 +43,31 @@ def execute_bind(zone):
             pyautogui.press(keys[0])
 
 # ==============================================================================
-# 3. TOBII GAZE PROCESSOR (Real-time Eye Tracking)
+# 3. MODEL SWAP MANIFOLD (LLM Engine Selection)
+# ==============================================================================
+def change_llm_model():
+    """Swap between Phi-3-Mini and BitNet quantized engines"""
+    print("\n--- Model Swap Manifold ---")
+    print("[1] Phi-3-Mini (High Accuracy)")
+    print("[2] BitNet 1.58-bit (Max Speed/Low Power)")
+    choice = input("Select: ").strip()
+    
+    if choice == '1':
+        selected = "phi-3-mini"
+        model_file = "phi-3-mini-4k-instruct-q4.gguf"
+    elif choice == '2':
+        selected = "bitnet-7b"
+        model_file = "bitnet-7b-q4.gguf"
+    else:
+        print("[ERROR] Invalid selection")
+        return
+    
+    print(f"[LLM] Model set to {selected}.")
+    print(f"[LLM] Model file: {model_file}")
+    print(f"[*] Restart the Keyboard to apply changes.")
+
+# ==============================================================================
+# 4. TOBII GAZE PROCESSOR (Real-time Eye Tracking)
 # ==============================================================================
 def gaze_processor(data):
     """Process Tobii eye tracking data in real-time"""
@@ -81,8 +105,9 @@ def gaze_processor(data):
             active_zone, start_time = z, time.time()
 
 # ==============================================================================
-# 4. MAIN CONFIGURATION INTERFACE
+# 5. MAIN CONFIGURATION INTERFACE
 # ==============================================================================
+
 def main():
     print("\n=== CRISPY MOUSE: SOVEREIGN HUB V3 (Tobii + Head Tracking) ===\n")
     
@@ -121,6 +146,7 @@ def main():
         print("[3] Set Saccade Limit")
         print("[4] Change Gaze-Zone Binds")
         print("[5] Save Config to File")
+        print("[6] Swap LLM Model")
         print("[0] Exit")
         
         choice = input("\nSelect Segment: ").strip()
@@ -171,6 +197,9 @@ def main():
                 print("[ACK] Configuration saved to crispy_config.json")
             except Exception as e:
                 print(f"[ERROR] Failed to save config: {e}")
+                
+        elif choice == '6':
+            change_llm_model()
                 
         elif choice == '0':
             ser.close()

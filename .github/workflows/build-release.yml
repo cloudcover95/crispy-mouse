@@ -3,6 +3,7 @@ on:
   push:
     tags:
       - 'v*' # Triggers on v1.0, v1.1, etc.
+  workflow_dispatch: {}
 
 jobs:
   build_and_release:
@@ -12,16 +13,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install PlatformIO
-        run: pip install -U platformio
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install PlatformIO and build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install -U platformio build
         
       - name: Compile Sovereign Firmware
         run: pio run -e micro
-        
+
+      - name: Build Python SDK package
+        run: |
+          python -m build --sdist --wheel
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: .pio/build/micro/firmware.hex
+          files: |
+            .pio/build/micro/firmware.hex
+            dist/*
           body: "Sovereign Assistive HID v1.1 | Liquid Glass UI | PoE Cursor Scaling"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

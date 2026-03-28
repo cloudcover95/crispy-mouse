@@ -1,3 +1,31 @@
+## 🚀 Sovereign Deployment (End Users)
+1. **Download:** Go to the [Releases](https://github.com/cloudcover95/crispy-mouse/releases) tab and download `firmware.hex`.
+2. **Setup:** Double-click `setup_local.bat` on your Windows 11 machine to inject the Tobii/HID driver manifold.
+3. **Flash:** Use **XLoader** (Windows) to upload the `firmware.hex` to your ATmega32U4.
+4. **Initialize:** Run `python crispy_calibrate.py` to sync your eyes to the liquid glass interface.
+
+🚀 The Sovereign Stack Trace
+
+JuniorCloud LLC | Crispy Mouse v1.1-Sovereign
+
+    Hardware: ATmega32U4 (HID) + MPU-6050 (IMU) + Analog 0-40KPa (Pneumatic)
+    Middleware: Python 3.11 + pyserial + pyautogui + Windows 11 User32 API
+    Optical: Tobii Eye Tracker 5 + tobii-research SDK (Macro-Gaze Fusion)
+    AI/Logic: Gemini 3 Flash (Google) x JuniorCloud Iteration Protocol (Block 2)
+    Deployment: Edge-Native / Docker-SDK / local-zsh / No-Cloud Dependency
+
+🔧 Full Stack Architecture Outline (The Summary)
+
+    L1 (Physical): MPU-6050 Gyro + Pressure Transducer + Tobii IR Optical Stream.
+
+    L2 (Firmware): 100Hz EMA Filter Matrix + Pneumatic State Machine (Arduino C++).
+
+    L3 (Hub): Windows 11 Python Manifold + Saccade-Warp Logic + Commandstroke Binds.
+
+    L4 (UI): Liquid Glass "White Fog" Alpha-Interface (tkinter).
+
+#JuniorCloudLLC #Gemini3Flash #SovereignSDK #AssistiveHID #SensorFusion #LockedInRecovery #EdgeCompute #MPU6050 #TobiiResearch
+#old setups/txt below:
 # crispy-mouse
 to run: local (make flash) codespace webbrowser (make build)*also see below for setup
 personal computer type and click onscreen keyboard "SUP mouse" with dampening variables, control pressure sensitivity, sequenced input commands + windows key "keybind"  ______________________________________________________

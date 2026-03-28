@@ -28,7 +28,23 @@ pip install --upgrade pip
 echo [*] Installing Tobii ^& PyAutoGUI manifold...
 pip install tobii-research pyautogui screeninfo pyserial
 
+:: Install LLM inference engine
+echo [*] Installing Local LLM Engine (llama-cpp-python)...
+pip install llama-cpp-python
+
 echo [*] Liquid Glass UI ^& PoE Cursor Ready.
+echo [*] Local LLM Inference Engine Installed.
+echo --------------------------------------------------
+echo [!] IMPORTANT: Download a .gguf model file
+echo [!]    Create folder: mkdir models
+echo [!]    Download model from Hugging Face (1.5GB-3GB)
+echo [!]    Example: TinyLlama, Mistral, or Phi quantized models
+echo [!]    Place as: models/model.gguf
+echo [!] 
+echo [!] Recommended Models:
+echo [!]    TinyLlama-1.1B (fastest, 0.4GB)
+echo [!]    Mistral-7B-Q4 (balanced, 4GB)
+echo [!]    Neural-Chat-7B-Q5 (quality, 5GB)
 echo --------------------------------------------------
 echo [!] TO RUN CALIBRATION (Auto-launches keyboard):
 echo [!]    call .venv\Scripts\activate
@@ -42,7 +58,7 @@ echo [!] TO START SOVEREIGN HUB V3 (Tobii + Head Tracking):
 echo [!]    call .venv\Scripts\activate
 echo [!]    python crispy_hub_v3.py
 echo --------------------------------------------------
-echo [!] TO LAUNCH LIQUID GLASS KEYBOARD:
+echo [!] TO LAUNCH LIQUID GLASS KEYBOARD (with LLM Predictions):
 echo [!]    call .venv\Scripts\activate
 echo [!]    python crispy_keyboard.py
 echo --------------------------------------------------

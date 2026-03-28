@@ -2,3 +2,4 @@ pyserial>=3.5
 pyautogui>=0.9.53
 screeninfo>=0.8.1
 tobii-research>=1.14.0
+llama-cpp-python>=0.2.0
