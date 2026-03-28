@@ -3,6 +3,10 @@ from tkinter import ttk
 import json
 import subprocess
 import threading
+import time
+import serial
+import serial.tools.list_ports
+import tobii_research as tr
 from crispy_model_manager import get_model
 
 # ==============================================================================
@@ -73,7 +77,19 @@ class SovereignHub(tk.Tk):
                                     fg="#FFFFFF", font=("Verdana", 9), wraplength=450)
         self.status_label.pack(side=tk.BOTTOM, pady=20)
         
-        # === 5. ACTION MANIFOLD ===
+        # === 5. DIAGNOSTIC MANIFOLD ===
+        diag_frame = tk.LabelFrame(self, text=" HARDWARE DIAGNOSTICS ", bg="#1A1B26", fg="#C0F010")
+        diag_frame.pack(fill=tk.X, padx=20, pady=10)
+
+        self.mcu_status = tk.Label(diag_frame, text="● MCU: DISCONNECTED", bg="#1A1B26", fg="#FF4444")
+        self.mcu_status.pack(side=tk.LEFT, padx=10, pady=5)
+
+        self.tobii_status = tk.Label(diag_frame, text="● TOBII: DISCONNECTED", bg="#1A1B26", fg="#FF4444")
+        self.tobii_status.pack(side=tk.LEFT, padx=10, pady=5)
+
+        threading.Thread(target=self.hardware_heartbeat, daemon=True).start()
+
+        # === 6. ACTION MANIFOLD ===
         btn_frame = tk.Frame(self, bg="#1A1B26")
         btn_frame.pack(side=tk.BOTTOM, pady=10)
         
@@ -151,6 +167,30 @@ class SovereignHub(tk.Tk):
             self.update_status("Keyboard UI active.")
         except Exception as e:
             self.update_status(f"ERROR: Keyboard launch failed: {e}")
+
+    def hardware_heartbeat(self):
+        """Infinite loop verifying hardware link integrity every 2 seconds."""
+        while True:
+            # MCU (Pro Micro) check
+            ports = [p.device for p in serial.tools.list_ports.comports()]
+            mcu_online = any("USB" in p or "COM" in p for p in ports)
+            self.mcu_status.config(
+                text="● MCU: ONLINE" if mcu_online else "● MCU: DISCONNECTED",
+                fg="#C0F010" if mcu_online else "#FF4444"
+            )
+
+            # Tobii 5 check
+            try:
+                trackers = tr.find_all_eyetrackers()
+                tobii_online = len(trackers) > 0
+                self.tobii_status.config(
+                    text="● TOBII: ONLINE" if tobii_online else "● TOBII: DISCONNECTED",
+                    fg="#C0F010" if tobii_online else "#FF4444"
+                )
+            except Exception:
+                self.tobii_status.config(text="● TOBII: ERROR", fg="#FF4444")
+
+            time.sleep(2)
 
     def update_status(self, msg):
         """Update status label (thread-safe)"""

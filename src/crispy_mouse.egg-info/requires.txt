@@ -1,0 +1,13 @@
+pyserial>=3.5
+pyautogui>=0.9.53
+screeninfo>=0.8.1
+tobii-research>=1.14.0
+
+[dev]
+pytest>=7.4.3
+pytest-cov>=4.1.0
+black>=23.12.1
+flake8>=6.1.0
+mypy>=1.7.1
+isort>=5.13.0
+sphinx>=7.2.6

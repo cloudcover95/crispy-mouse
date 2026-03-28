@@ -1,0 +1,12 @@
+LICENSE
+LLM_SETUP.md
+MANIFEST.in
+README.md
+config.json
+pyproject.toml
+src/main.cpp
+src/crispy_mouse.egg-info/PKG-INFO
+src/crispy_mouse.egg-info/SOURCES.txt
+src/crispy_mouse.egg-info/dependency_links.txt
+src/crispy_mouse.egg-info/requires.txt
+src/crispy_mouse.egg-info/top_level.txt

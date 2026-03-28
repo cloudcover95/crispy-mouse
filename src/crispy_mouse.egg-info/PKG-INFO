@@ -1,17 +1,24 @@
-# 🖱️ Crispy Mouse SDK v2.0-Sovereign
-**High-Fidelity Assistive HID Manifold | JuniorCloud LLC**
-
-## 🚀 Deployment (Windows 11)
-1. **Flash Firmware:** Download `firmware.hex` from the [Latest Release](https://github.com/cloudcover95/crispy-mouse/releases). Use XLoader to flash the ATmega32U4.
-2. **Setup SDK:** Download and run `setup_local.bat`. This instantiates the `.venv` and installs the `crispy-mouse` Wheel.
-3. **Launch Hub:** Type `crispy-hub` in your terminal or double-click the desktop shortcut.
-4. **Tune & Calibrate:** Use the Hub GUI to adjust the Kinematic Latency ($\alpha$) and Sensitivity.
-
-## 🧠 Kinematic Fusion
-The system fuses two disparate data streams to eliminate "locked-in" communication friction:
-- **Macro-Navigation (Optical):** Tobii 5 Saccade-Warp logic for global coordinate teleportation.
-- **Micro-Navigation (Inertial):** MPU-6050 EMA-filtered relative motion for pixel-perfect key acquisition.
-  - Formula: $v_t = \alpha \omega_{raw} + (1 - \alpha) v_{t-1}$
+Metadata-Version: 2.4
+Name: crispy-mouse
+Version: 2.0.0
+Summary: Sovereign Assistive HID Manifold
+Author-email: JuniorCloud LLC <dev@juniorcloud.io>
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyserial>=3.5
+Requires-Dist: pyautogui>=0.9.53
+Requires-Dist: screeninfo>=0.8.1
+Requires-Dist: tobii-research>=1.14.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.3; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: black>=23.12.1; extra == "dev"
+Requires-Dist: flake8>=6.1.0; extra == "dev"
+Requires-Dist: mypy>=1.7.1; extra == "dev"
+Requires-Dist: isort>=5.13.0; extra == "dev"
+Requires-Dist: sphinx>=7.2.6; extra == "dev"
+Dynamic: license-file
 
 ## 🚀 Sovereign Deployment (End Users)
 1. **Download:** Go to the [Releases](https://github.com/cloudcover95/crispy-mouse/releases) tab and download `firmware.hex`.
