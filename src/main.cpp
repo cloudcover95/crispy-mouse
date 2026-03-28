@@ -4,15 +4,22 @@
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 
-float sensitivity = 2.0;
-float damper = 0.15;
-int pressure_threshold = 600;
+// ==============================================================================
+// SOVEREIGN TUNING TENSORS (Synced with crispy_hub_v3.py Configuration)
+// ==============================================================================
+float sensitivity = 2.2;         // MPU Multiplier (SENS command)
+float latency_alpha = 0.15;      // EMA filter alpha via Hub "Latency" (DAMP command)
+int pressure_threshold = 550;    // Pneumatic puff trigger (THRE command)
+const float DEADZONE = 0.05;     // Topological gyro deadzone filter
+
 const int PRESSURE_PIN = A0;
 const int PUFF_WINDOW_MS = 400;
 const int LONG_PUFF_MS = 1200;
 
 Adafruit_MPU6050 mpu;
 float smoothed_X = 0, smoothed_Y = 0;
+
+// Pneumatic State Machine Variables
 unsigned long puffStartTime = 0, lastPuffTime = 0;
 int puffCount = 0;
 bool isPuffing = false, actionFired = false;
@@ -26,9 +33,19 @@ void executeHomeSequence() {
 void parseSerial() {
     if (Serial.available() > 0) {
         String cmd = Serial.readStringUntil('\n');
-        if (cmd.startsWith("SENS:")) sensitivity = cmd.substring(5).toFloat();
-        if (cmd.startsWith("DAMP:")) damper = cmd.substring(5).toFloat();
-        if (cmd.startsWith("THRE:")) pressure_threshold = cmd.substring(5).toInt();
+        cmd.trim();
+        if (cmd.startsWith("SENS:")) {
+            sensitivity = cmd.substring(5).toFloat();
+            Serial.print("ACK_SENS:"); Serial.println(sensitivity);
+        }
+        if (cmd.startsWith("DAMP:")) {
+            latency_alpha = cmd.substring(5).toFloat();
+            Serial.print("ACK_DAMP:"); Serial.println(latency_alpha);
+        }
+        if (cmd.startsWith("THRE:")) {
+            pressure_threshold = cmd.substring(5).toInt();
+            Serial.print("ACK_THRE:"); Serial.println(pressure_threshold);
+        }
     }
 }
 
@@ -44,8 +61,16 @@ void loop() {
     parseSerial();
     sensors_event_t a, g, temp;
     mpu.getEvent(&a, &g, &temp);
-    smoothed_X = (damper * g.gyro.z) + ((1.0 - damper) * smoothed_X);
-    smoothed_Y = (damper * g.gyro.y) + ((1.0 - damper) * smoothed_Y);
+    
+    // Tightened Deadzone for Macro-Micro stability
+    float r_z = (abs(g.gyro.z) < DEADZONE) ? 0 : g.gyro.z;
+    float r_y = (abs(g.gyro.y) < DEADZONE) ? 0 : g.gyro.y;
+    
+    // EMA Filter using Latency Alpha (controlled via Hub)
+    smoothed_X = (latency_alpha * r_z) + ((1.0 - latency_alpha) * smoothed_X);
+    smoothed_Y = (latency_alpha * r_y) + ((1.0 - latency_alpha) * smoothed_Y);
+    
+    // Relative Motion Injection
     Mouse.move(-(int)(smoothed_X * sensitivity * 10), (int)(smoothed_Y * sensitivity * 10), 0);
     
     int currentPressure = analogRead(PRESSURE_PIN);
@@ -63,5 +88,6 @@ void loop() {
         else if (puffCount >= 2) Mouse.click(MOUSE_RIGHT);
         puffCount = 0;
     }
-    delay(10);
+    
+    delay(10); // 100Hz manifold refresh
 }

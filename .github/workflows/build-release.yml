@@ -1,0 +1,27 @@
+name: Sovereign Release Pipeline
+on:
+  push:
+    tags:
+      - 'v*' # Triggers on v1.0, v1.1, etc.
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install PlatformIO
+        run: pip install -U platformio
+        
+      - name: Compile Sovereign Firmware
+        run: pio run -e micro
+        
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: .pio/build/micro/firmware.hex
+          body: "Sovereign Assistive HID v1.1 | Liquid Glass UI | PoE Cursor Scaling"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

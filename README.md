@@ -1,5 +1,5 @@
 # crispy-mouse
-to run: local (make flash) codespace webbrowser (make build)
+to run: local (make flash) codespace webbrowser (make build)*also see below for setup
 personal computer type and click onscreen keyboard "SUP mouse" with dampening variables, control pressure sensitivity, sequenced input commands + windows key "keybind"  ______________________________________________________
 # Crispy Mouse (Assistive HID Manifold)
 
@@ -21,8 +21,27 @@ An edge-native, low-latency assistive hardware interface utilizing an ATmega32U4
 4.  **Topological Origin Reset (HOME):** Injects an extreme negative scalar vector to force the OS cursor to `(0,0)`, followed by an offset vector to approximate the center manifold. Recovers the cursor if lost.
 5.  **Dynamic Parameter Injection:** Variables can be tuned in real-time via Serial communication without reflashing the ROM.
 
+# 🖱️ Crispy Mouse SDK
+**Sovereign Assistive Interface for Windows 11**
+
+### 🚀 Seamless Setup (Windows 11 Only)
+If you are here to use the device, do not use the "Open in Codespaces" button. Follow these steps:
+
+1. **Clone/Download** this repo to your local Windows 11 PC.
+2. **Plug in** your Tobii Eye Tracker and ATmega32U4.
+3. **Double-click** `setup_local.bat`. This will handle all driver injections.
+4. **Run Calibration:** ```powershell
+   python crispy_calibrate.py
+
 ## Deployment Pipeline
 Execute via `zsh` or bash terminal:
+cd ~/Documents  # Or wherever you want the repo
+git clone https://github.com/cloudcover95/crispy-mouse.git
+cd crispy-mouse
+# Using Homebrew (recommended for Apple Silicon)
+brew install platformio
+
 * `make build` - Compiles the firmware binary.
 * `make flash` - Uploads to the MCU (requires local USB).
 * `make hub` - Launches the Python CLI configurator.
+![sys_skematic](image.png)
