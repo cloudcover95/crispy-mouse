@@ -1,15 +1,23 @@
 # crispy-mouse
 
-**Sov.PIO — Sovereign Input + Deterministic Execution Layer**
+**Sovereign PIO Input + Deterministic Execution Layer**
 
-Production-grade foundation for user-controlled operating systems, AI robotics, and multi-modal spatial sensing (including room-scale extraneous imaging with multiple optical sensors + WiFi CSI movement tracking).
+crispy-mouse is the low-level input and execution foundation for the JuniorCloud LLC sovereign edge stack. It handles kinematic dampening, sensor fusion, and deterministic macro automation.
 
-## New in Latest Update
+## Current State
 
-- Multi-optical sensor room mapping support (multiple cameras, LiDAR, TrueDepth)
-- WiFi CSI-based movement tracking router integration
-- Dedicated data pipeline converter for BitNet-mlx
+- Full integration with BitNet-mlx ternary pipeline via `TernaryTelemetryAdapter`
+- Telemetry and kinematic data can now be projected into discrete 1.58-bit space before execution
+- Production scaffolding for multi-modal sensing (optical + WiFi CSI)
+- Designed for both assistive technology and advanced robotics / performance use cases
 
-`crispy-mouse` now serves as the fusion and execution layer for rich spatial data coming from both optical and WiFi sensing sources, feeding directly into sovereign reasoning engines.
+## Integration
 
-See `src/sensing/` for the production modules.
+- **JuniorHome** → Central orchestrator
+- **BitNet-mlx** → Ternary projection of sensor data
+- **JuniorClimbs** → Performance imaging and movement analysis
+- **JuniorOmega** → Spatial sensing and fabrication
+
+We have come a long way from the original assistive-only scope. crispy-mouse is now a core execution and sensing layer in a full sovereign technology stack.
+
+Part of the JuniorCloud LLC ecosystem.
