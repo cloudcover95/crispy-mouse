@@ -1,3 +1,66 @@
-🖱️ Crispy Mouse: Sovereign Kinematic Manifold v2.1High-Fidelity Assistive HID Interface | JuniorCloud LLC🌐 Mission AbstractThe Crispy Mouse project is a modular, edge-native hardware interface designed to restore high-bandwidth human-computer interaction for individuals with motor impairment. By fusing multi-modal sensor telemetry into a unified Topological Manifold, the system eliminates communication friction between the user's intent and the OS display environment.🧠 System Architecture (The JuniorCloud Stack)The manifold is structured across four discrete abstraction layers to ensure deterministic latency and security:LayerTypeComponentsL1PhysicalATmega32U4 MCU, MPU-6050 (6-Axis IMU), Analog Pneumatic Transducer ($0\text{--}40\text{ kPa}$), Tobii Eye Tracker 5.L2Firmware$100\text{ Hz}$ Real-time signal processing engine. Implements a frequency-optimized low-pass manifold.L3MiddlewareWindows 11 Python Manifold via user32.dll. Manages Saccade-Warp coordinate transformation.L4UILiquid Glass "White Fog" Alpha-Interface (High-contrast HUD).🧬 Core Logic: Kinematic FusionThe system resolves intent by projecting disparate data streams onto a shared coordinate manifold.### 1. Macro-Navigation (Optical Saccade-Warp)Coordinates coarse-grained cursor "teleportation" via infrared optical tracking. The system predicts the target manifold region, reducing the total distance required for manual kinematic navigation.### 2. Micro-Navigation (Gamma Signal Inference)Fine-grained pixel acquisition is governed by the Gamma Signal Inference (GSI) tensor. This recursive filter processes raw inertial data to isolate intentional motion.Recursive Manifold Update:$$v_t = \Gamma \cdot \omega_{raw} + (I - \Gamma) \cdot v_{t-1}$$Where:$\Gamma$: The proprietary Gamma Inference Tensor (optimized for current chassis vibration/drift).$I$: The Identity Matrix for state-space stability.$\omega_{raw}$: Raw angular velocity vector input from the L1 IMU.$v_t$: The final projected velocity vector in the screen manifold.### 3. Pneumatic Interfacing (The State Machine)A pressure-sensitive interrupt system handles discrete events (clicks) through temporal windowing of $\Delta P$:$\Delta P_{short}$: Primary Action (Left Click).$\Delta P_{double}$: Contextual Action (Right Click).$\Delta P_{sustained}$: Topological Origin Reset (Returns cursor to HOME manifold).🚀 Deployment Protocol (Windows 11)### Hardware IgnitionConnect the ATmega32U4 via USB.Flash the firmware.hex binary using XLoader or PlatformIO.Calibrate the Tobii 5 hardware to the primary display.### Software Manifold SetupClone the Node:PowerShellgit clone https://github.com/cloudcover95/crispy-mouse.git
-Initialize Environment: Execute setup_local.bat to instantiate the .venv and inject necessary HID drivers.Sync Manifold: Run the calibration utility to align the GSI tensor:PowerShellpython crispy_calibrate.py
-🛡️ Sovereign Integrity & IP SecurityThis SDK is explicitly Edge-Native. All SVD mesh integrity checks and kinematic regressions are computed locally on the host machine and MCU.[!IMPORTANT]Directory Isolation: The 01_Legal and 02_Assets directories are excluded from the public build pipeline. Any attempt to traverse these paths via unauthorized harvesters will trigger a manifold disconnect.JuniorCloud LLC | Lead Architect: X @cloud_cover First-principles mathematics. No bloated frameworks. No apologies.
+# crispy-mouse
+
+**Sov.PIO (Pneumatic-Inertial-Optical) Input SDK**
+
+High-fidelity, edge-native assistive + deterministic macro execution interface.
+Originally built for locked-in-syndrome applications, now serving as the low-latency hardware execution layer for the JuniorCloud LLC sovereign quant stack.
+
+## Current Role in JuniorCloud LLC Ecosystem
+
+`crispy-mouse` acts as the final deterministic execution boundary:
+
+- Receives macro commands via Unix Domain Socket from `JuniorStock`
+- Executes hardware-level actions with kinematic dampening and autoregressive prediction
+- Maintains strict sovereignty (local-only, no cloud dependency)
+
+## Integration Points
+
+### JuniorStock (V6.4+)
+- Communicates via Unix Domain Socket (`/tmp/crispy_mouse_gateway.sock`)
+- Used by `SovereignExecutionBus` for low-latency trade execution
+- Supports maker/taker limit orders and position management macros
+
+### BitNet-mlx
+- Provides the reasoning layer that generates high-conviction consensus
+- `crispy-mouse` executes the final deterministic actions derived from BitNet inference
+
+### JuniorMemSys-Suite
+- Long-term topological memory for agent state
+- `crispy-mouse` can persist macro history into the memory palace
+
+### JuniorFetch
+- Local RAG / semantic search over research documents
+- Can feed contextual knowledge into macro decision making
+
+### JuniorClimbs & JuniorCoach
+- Sports performance tracking and coaching platform
+- `crispy-mouse` provides low-latency input layer for real-time athlete biometric / eye-tracking data
+
+## Architecture Principles
+
+- **Deterministic macro-automata** (ATmega32u4 + Python layer)
+- **Kinematic dampening** for smooth execution
+- **Autoregressive LLM prediction** for intent forecasting
+- **Zero cloud dependency** — fully local on Apple Silicon / edge hardware
+
+## Quick Integration (from JuniorStock)
+
+```python
+from src.juniorstock.engines.swarm.execution_bus import SovereignExecutionBus
+
+bus = SovereignExecutionBus()
+receipt = bus.process_execution_payload(ticker, consensus, risk)
+# Internally dispatches to crispy-mouse via Unix socket
+```
+
+## Original Mission (Preserved)
+
+Still fully functional as a high-precision Human-Machine Interface for locked-in-syndrome users via:
+- Eye tracking (Tobii)
+- Sip-and-puff
+- IMU + optical fusion
+- Custom HID macros
+
+## Repository
+
+Part of the JuniorCloud LLC sovereign edge stack under `cloudcover95`.
