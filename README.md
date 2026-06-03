@@ -1,66 +1,70 @@
 # crispy-mouse
 
-**Sov.PIO (Pneumatic-Inertial-Optical) Input SDK**
+**Sov.PIO — Sovereign Input + Deterministic Macro Execution Layer**
 
-High-fidelity, edge-native assistive + deterministic macro execution interface.
-Originally built for locked-in-syndrome applications, now serving as the low-latency hardware execution layer for the JuniorCloud LLC sovereign quant stack.
+A high-fidelity, edge-native interface for **user-controlled operating systems**, AI robotics, assistive technology, and deterministic automation.
 
-## Current Role in JuniorCloud LLC Ecosystem
+Originally developed for locked-in-syndrome applications, `crispy-mouse` has evolved into a universal low-level input and execution bus that works across human-computer interaction, robotics, quant trading execution, and imaging systems — all while remaining fully local and sovereign.
 
-`crispy-mouse` acts as the final deterministic execution boundary:
+## Core Philosophy
 
-- Receives macro commands via Unix Domain Socket from `JuniorStock`
-- Executes hardware-level actions with kinematic dampening and autoregressive prediction
-- Maintains strict sovereignty (local-only, no cloud dependency)
+- **User-controlled operating systems** — Direct, low-latency control of macOS, Linux, Windows, and embedded systems
+- **Deterministic macro-automata** — Reliable, auditable action execution (no probabilistic drift)
+- **Edge-native & air-gapped** — Runs entirely locally on Apple Silicon, Raspberry Pi, microcontrollers (ATmega32u4), etc.
+- **Sensor fusion input** — IMU, optical, eye-tracking, LiDAR, pneumatic, sip-and-puff, and custom sensors
 
-## Integration Points
+## Use Cases
 
-### JuniorStock (V6.4+)
-- Communicates via Unix Domain Socket (`/tmp/crispy_mouse_gateway.sock`)
-- Used by `SovereignExecutionBus` for low-latency trade execution
-- Supports maker/taker limit orders and position management macros
+### 1. User-Controlled Operating Systems
+- Full keyboard/mouse/HID macro execution
+- System automation and workflow orchestration
+- Accessibility layer for locked-in users
+- Sovereign desktop control without cloud dependencies
 
-### BitNet-mlx
-- Provides the reasoning layer that generates high-conviction consensus
-- `crispy-mouse` executes the final deterministic actions derived from BitNet inference
+### 2. AI Robotics & Autonomous Systems
+- Low-latency action execution for robotic arms, mobile robots, and drones
+- Sensor-to-action pipelines (eye-tracking → robot control)
+- Deterministic safety layers for human-robot interaction
+- Integration with edge AI models (BitNet-mlx, MLX)
 
-### JuniorMemSys-Suite
-- Long-term topological memory for agent state
-- `crispy-mouse` can persist macro history into the memory palace
+### 3. Extraneous Imaging & Computer Vision
+- Real-time visual input processing pipelines
+- Eye-tracking + external camera fusion ("extraneous imaging")
+- Integration with JuniorClimbs / JuniorCoach for sports performance vision systems
+- LiDAR / TrueDepth / optical flow input for spatial computing and robotics
 
-### JuniorFetch
-- Local RAG / semantic search over research documents
-- Can feed contextual knowledge into macro decision making
+### 4. Quant Trading Execution (JuniorStock)
+- High-speed, deterministic trade execution via Unix Domain Socket
+- Kinematic dampening for smooth order placement
+- Used by `SovereignExecutionBus` in JuniorStock V6.4+
 
-### JuniorClimbs & JuniorCoach
-- Sports performance tracking and coaching platform
-- `crispy-mouse` provides low-latency input layer for real-time athlete biometric / eye-tracking data
+## Ecosystem Integration (JuniorCloud LLC)
 
-## Architecture Principles
+| Project              | Role of crispy-mouse                          |
+|----------------------|-----------------------------------------------|
+| **JuniorStock**      | Low-latency execution bus via Unix socket     |
+| **BitNet-mlx**       | Final deterministic action layer              |
+| **JuniorMemSys**     | Persist macro history into topological memory |
+| **JuniorFetch**      | Context-aware macro triggering                |
+| **JuniorClimbs**     | Vision + biometric input layer for performance imaging |
+| **JuniorOmega**      | Spatial computing / fabrication input         |
 
-- **Deterministic macro-automata** (ATmega32u4 + Python layer)
-- **Kinematic dampening** for smooth execution
-- **Autoregressive LLM prediction** for intent forecasting
-- **Zero cloud dependency** — fully local on Apple Silicon / edge hardware
+## Technical Foundation
 
-## Quick Integration (from JuniorStock)
+- Deterministic macro engine (Python + C firmware)
+- Kinematic dampening & autoregressive prediction
+- Unix Domain Socket + HID interfaces
+- Full MLX / Metal acceleration support on Apple Silicon
+- Cross-platform (macOS, Linux, embedded)
 
-```python
-from src.juniorstock.engines.swarm.execution_bus import SovereignExecutionBus
+## Getting Started
 
-bus = SovereignExecutionBus()
-receipt = bus.process_execution_payload(ticker, consensus, risk)
-# Internally dispatches to crispy-mouse via Unix socket
+```bash
+# From JuniorStock
+python -c "from src.juniorstock.engines.swarm.execution_bus import SovereignExecutionBus; ..."
+
+# Direct hardware macro example
+# (See examples/ in future releases)
 ```
 
-## Original Mission (Preserved)
-
-Still fully functional as a high-precision Human-Machine Interface for locked-in-syndrome users via:
-- Eye tracking (Tobii)
-- Sip-and-puff
-- IMU + optical fusion
-- Custom HID macros
-
-## Repository
-
-Part of the JuniorCloud LLC sovereign edge stack under `cloudcover95`.
+`crispy-mouse` remains the reliable, sovereign execution foundation for the entire JuniorCloud LLC edge stack.
